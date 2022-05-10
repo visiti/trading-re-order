@@ -2,8 +2,13 @@ import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { Chart, init, KLineData, extension } from 'klinecharts';
 import { HttpStockService } from '../service/http-stock.service';
 import { _VOL } from '../share/chartTechnicalindcator'
-import { floorToFixed } from '../share/utils';
-import NP from 'number-precision'
+
+// import NP from 'number-precision'
+import { Decimal } from 'decimal.js-light';
+Decimal.set({
+  precision: 8,
+});
+
 
 extension.addTechnicalIndicatorTemplate(_VOL);
 
@@ -35,9 +40,9 @@ export class FuturesComponent implements AfterViewInit, OnInit {
     this.KChart?.updateData(this.KLineData[this.step]);
     if (!this.holding) { return }
     const price = this.KLineData[this.step].close;
-    this.rate = NP.strip(this.holdDir * NP.round(NP.minus(NP.divide(price, this.holdPrice), 1), 5));
-    this.balance = NP.strip(NP.times(this.account, NP.plus(1, this.rate)));
-    this.Rate = NP.strip(NP.minus(NP.divide(this.balance, 10000), 1));
+    this.rate = Number(new Decimal(price).div(this.holdPrice).minus(1).times(this.holdDir).toFixed(5));
+    this.balance = Number(new Decimal(this.rate).plus(1).times(this.account).toFixed(5));
+    this.Rate = Number(new Decimal(this.balance).div(10000).minus(1).toFixed(5));
   }
 
   buy(dir: number) {
@@ -59,6 +64,9 @@ export class FuturesComponent implements AfterViewInit, OnInit {
     this.nextStock();
   }
 
+  getpercent(num: number) {
+    return new Decimal(num).times(100)
+  }
 
 
   ngOnInit(): void {
@@ -71,6 +79,9 @@ export class FuturesComponent implements AfterViewInit, OnInit {
   ngAfterViewInit(): void {
     this.KChart = init(this.chartDom.nativeElement,
       {
+        grid: {
+          show: false
+        },
         xAxis: {
           tickText: false
         },
@@ -82,6 +93,9 @@ export class FuturesComponent implements AfterViewInit, OnInit {
             top: 0.2,
             bottom: -0.001
           },
+        },
+        tooltip: {
+          showRule: 'none'
         }
 
       }

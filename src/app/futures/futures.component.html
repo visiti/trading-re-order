@@ -11,9 +11,9 @@
         <mat-card-subtitle>账户</mat-card-subtitle>
         <mat-card-content>
             <p>总额:<span class="txt">{{balance}}</span>
-                <span class="txt">盈利：</span><span class="txt" class="{{Rate>0?'up':'down'}}">{{Rate*100}}%</span>
+                <span class="txt">盈利：</span><span class="txt" class="{{Rate>0?'up':'down'}}">{{getpercent(Rate)}}%</span>
             </p>
-            <p>持仓涨幅:<span class="txt" class="{{rate>0?'up':'down'}}">{{rate*100}}%</span> </p>
+            <p>持仓涨幅:<span class="txt" class="{{rate>0?'up':'down'}}">{{getpercent(rate)}}%</span> </p>
         </mat-card-content>
     </mat-card>
 </div>
