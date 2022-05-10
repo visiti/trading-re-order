@@ -1,0 +1,26 @@
+.m-container{
+    width: 100vw;
+    height: 100vh;
+    /* margin-top: 5vh; */
+    /* margin-left: 5vw; */
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.chart{
+    flex-grow:1 ;
+}
+button{
+    margin-top: 10px;
+    margin-left:8px ;
+}
+.txt{
+    margin-left:8px ;
+}
+.up{
+    color: #26A69A;
+}
+.down{
+    color: #EF5350;
+}

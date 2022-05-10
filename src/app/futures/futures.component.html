@@ -1,0 +1,19 @@
+<div class="m-container">
+    <div #chart class="chart"></div>
+    <mat-toolbar>
+        <button mat-raised-button (click)="nextStock()"
+            disabled="{{step>KLineData.length-1}}">{{step>KLineData.length-1?'已结束':'下一根'}}</button>
+        <button mat-raised-button (click)="buy(1)" disabled="{{holdDir==1||step>KLineData.length-1}}">买入</button>
+        <button mat-raised-button (click)="buy(-1)" disabled="{{holdDir==-1||step>KLineData.length-1}}">卖出</button>
+        <button mat-raised-button (click)="ping()" disabled="{{holdDir==0||step>KLineData.length-1}}">平仓</button>
+    </mat-toolbar>
+    <mat-card>
+        <mat-card-subtitle>账户</mat-card-subtitle>
+        <mat-card-content>
+            <p>总额:<span class="txt">{{balance}}</span>
+                <span class="txt">盈利：</span><span class="txt" class="{{Rate>0?'up':'down'}}">{{Rate*100}}%</span>
+            </p>
+            <p>持仓涨幅:<span class="txt" class="{{rate>0?'up':'down'}}">{{rate*100}}%</span> </p>
+        </mat-card-content>
+    </mat-card>
+</div>
